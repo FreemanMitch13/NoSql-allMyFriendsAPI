@@ -10,12 +10,18 @@ const userSchema = new Schema(
             type: String,
             unique: true,
             required: true,
-            trimmed: true
+            trim: true
         },
         email: {
             type: String,
             unique: true,
             required: true,
+            // validators: [
+            //     isValidEmail()
+            // ]
         }
     }
 );
+
+const User = model('User', userSchema);
+module.exports = User;
