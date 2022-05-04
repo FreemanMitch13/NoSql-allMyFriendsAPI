@@ -15,7 +15,20 @@ const thoughtSchema = new Schema(
         username: {
             type: String,
             required: true,
-        }
+        },
+        reactions: [
+            {
+                type: Schema.Types.ObjectId,
+                ref: 'Reaction'
+            }
+        ]
+    },
+    // fix virtuals
+    {
+        toJSON: {
+            virtuals: true,
+        },
+        id: false,
     }
 );
 

@@ -19,7 +19,26 @@ const userSchema = new Schema(
             // validators: [
             //     isValidEmail()
             // ]
-        }
+        },
+        thoughts: [
+            {
+                type: Schema.Types.ObjectId,
+                ref: 'Thought'
+            }
+        ],
+        friends: [
+            {
+                type: Schema.Types.ObjectId,
+                ref: 'User'
+            }
+        ]
+    },
+    // fix the virtuals?
+    {
+        toJSON: {
+            virtuals: true,
+          },
+          id: false,
     }
 );
 
