@@ -7,8 +7,8 @@ module.exports = {
         .catch((err) => res.status(500).json(err));
     },
     getSingleUser(req, res) {
-        User.find()  //???????
-        .select()
+        User.find({ _id: req.params.userId})  
+        .select('-__v')
         .then((user) =>
         !user
             ?res.status(404).json({ message: 'User not found' })
@@ -25,11 +25,11 @@ module.exports = {
           });
     },
     deleteUser(req, res) {
-        User.findOneAndDelete({ _id: req.params.courseId })
+        User.findOneAndDelete({ _id: req.params.userId })
           .then((user) =>
             !user
               ? res.status(404).json({ message: 'No user with that ID' })
-              : Student.deleteMany({ _id: { $in: user.thoughts } })
+              : Thought.deleteMany({ _id: { $in: user.thoughts } })
           )
           .then(() => res.json({ message: 'User and Thoughts deleted!' }))
           .catch((err) => res.status(500).json(err));
@@ -46,6 +46,23 @@ module.exports = {
               : res.json(user)
           )
           .catch((err) => res.status(500).json(err));
-      },
-
-}
+    },
+    createFriend(req, res) {
+      User.create(req.body)
+        .then((user) => res.json(user))
+        .catch((err) => {
+          console.log(err);
+          return res.status(500).json(err);
+        });
+    },
+      deleteFriend(req, res) {
+        User.findOneAndDelete({ _id: req.params.friendId })
+        .then((user) =>
+        !user
+          ? res.status(404).json({ message: 'No user with that ID' })
+          : Users.deleteMany({ _id: { $in: user.friends } })
+        )
+        .then(() => res.json({ message: 'Friend deleted!' }))
+        .catch((err) => res.status(500).json(err));
+    },
+};
