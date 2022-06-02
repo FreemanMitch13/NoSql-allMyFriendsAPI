@@ -7,7 +7,7 @@ const connectionString =
 
 connect(connectionString, {
   useNewUrlParser: true,
-  useUnifiedTopology: true,
+  useUnifiedTopology: false,
 });
 
 module.exports = connection;
